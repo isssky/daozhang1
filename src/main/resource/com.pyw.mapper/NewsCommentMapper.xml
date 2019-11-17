@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace ="com.pyw.mapper.NewsCommentMapper" >
+    <select id="queryCommentsByNewsId" resultType="com.pyw.pojo.NewsComment">
+        select id,content,author,createdate as CreateDate
+        from news_comment
+        <where>
+            <if test="id != null"  >
+                and newsid = #{id}
+
+            </if>
+
+        </where>
+
+    </select>
+
+
+    <insert id="add">
+        insert into news_comment
+
+        <trim prefix="(" suffix=")" prefixOverrides=",">
+        <if test="content != null and content != '' ">
+        ,content
+        </if>
+            <if test="author != null and author != '' ">
+                ,author
+            </if>
+            <if test="createDate != null  ">
+                ,createdate
+            </if>
+            <if test="newsDetail != null and newsDetail.id != null ">
+                ,newsid
+            </if>
+        </trim>
+
+
+            <trim prefix="values(" suffix=")" prefixOverrides=",">
+            <if test="content != null and content != '' ">
+                ,#{content}
+            </if>
+            <if test="author != null and author != '' ">
+                ,#{author}
+            </if>
+            <if test="createDate != null  ">
+                ,#{createDate}
+            </if>
+            <if test="newsDetail != null and newsDetail.id != null ">
+                ,#{newsDetail.id}
+            </if>
+
+
+        </trim>
+
+    </insert>
+
+<!--  删除所有评论  -->
+    <delete id="delete">
+        delete from news_comment where newsId = #{newsId}
+
+    </delete>
+
+</mapper>

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace ="com.pyw.mapper.NewsDetailMapper" >
+
+<select id="queryAll" resultType="com.pyw.pojo.NewsDetail">
+    select  id,title,summary,author,createdate as createDate from news_detail order by createDate desc
+</select>
+
+    <select id="queryByTitle" resultType="com.pyw.pojo.NewsDetail">
+    select  id,title,summary,author,createdate as createDate from news_detail order by createDate desc
+    <where>
+        <if test="title != null and title != '' ">
+            and title like conccat('%',#{title},'%')
+
+        </if>
+    </where>
+</select>
+
+    <delete id="delete">
+        delete from news_detail where id = #{id}
+
+    </delete>
+
+</mapper>
